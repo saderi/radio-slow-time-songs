@@ -22,7 +22,9 @@ if ($result->num_rows > 0) {
 
         // echo $row["artist"].' - '.$row["title"];
         echo " .. | .. ";
-        echo rawurlencode($row["artist"].' '.$row["title"]);
+        if ($row["spotify_track_id"]) {
+            echo '<a href="spotify:track:'.$row["spotify_track_id"].'">Add to spotify</a>';
+        }
 
 
         echo ' <span style="float: right"></span>';

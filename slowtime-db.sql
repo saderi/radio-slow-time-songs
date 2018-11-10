@@ -3,6 +3,7 @@ CREATE TABLE `play_list` (
   `title` varchar(255) NOT NULL,
   `artist` varchar(255) NOT NULL,
   `play_date` datetime NOT NULL,
+  `spotify_track_id` varchar(255) NOT NULL,
   `rating` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

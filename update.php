@@ -50,8 +50,21 @@ if ($result->num_rows > 0) {
 
 if (strcmp($old,$nowPlaying)) {
 
-    $sql = 'INSERT INTO play_list (play_date, title, artist) 
-            VALUES ("'.$play_date.'", "'.$title_artist[1].'", "'.$title_artist[0].'")';
+    include 'spotifyClass.php';
+
+    $spotify = new Spotify(
+        $clientID,
+        $clientSecret
+    );
+
+    $accessToken = $spotify->getAccessToken();
+    if ($accessToken) {
+        $spotifyTrackId = $spotify->getSpotifyURL($accessToken, $title_artist[1], $title_artist[0]);
+    }
+
+
+    $sql = 'INSERT INTO play_list (play_date, title, artist, spotify_track_id) 
+            VALUES ("'.$play_date.'", "'.$title_artist[1].'", "'.$title_artist[0].'", "'.$spotifyTrackId.'")';
     $conn->query($sql);
 
 }
