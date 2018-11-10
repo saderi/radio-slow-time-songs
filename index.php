@@ -19,15 +19,13 @@ if ($result->num_rows > 0) {
         echo '<div style="clear: both">';
 
         echo $row["artist"].' - '.$row["title"];
-        
-        ?>
-            <form action="rating.php" method="post" style="float: right">
-                <input type="hidden" name="item_id" value="<?php echo $row["id"]; ?>">
-                <button type="submit">up</button>
-            </form>
-        <?php
 
-        echo ' <span style="float: right">- '.$row["rating"].' -</span>';
+        // echo $row["artist"].' - '.$row["title"];
+        echo " .. | .. ";
+        echo rawurlencode($row["artist"].' '.$row["title"]);
+
+
+        echo ' <span style="float: right"></span>';
         echo "<hr>";
         echo "</div>";
         

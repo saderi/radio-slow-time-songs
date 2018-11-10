@@ -14,4 +14,10 @@ $DB_USER = 'username_here';
 /** MySQL database password */
 $DB_PASS = 'password_here';
 
+/** spotify app Client ID */
+$clientID = '';
+
+/** spotify app Client Secret */
+$clientSecret = '';
+
 date_default_timezone_set('Europe/Istanbul');
