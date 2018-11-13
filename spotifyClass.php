@@ -1,4 +1,3 @@
-
 <?php 
 
 class Spotify 
@@ -6,12 +5,23 @@ class Spotify
     protected $clientID;
     protected $clientSecret;
 
+    /**
+     * Constructor
+     * Set up client credentials.
+     *
+     * @param string $clientId The client ID.
+     * @param string $clientSecret The client secret.
+     */
     function __construct($clientID,$clientSecret) {
         $this->clientID = $clientID;
         $this->clientSecret = $clientSecret;
     }
 
-
+    /**
+     * Get the access token.
+     *
+     * @return string The access token.
+     */
     function getAccessToken()
     {
         $authorization = base64_encode($this->clientID . ':' . $this->clientSecret);
@@ -46,11 +56,19 @@ class Spotify
     }
     
 
-
+    /**
+     * Get Spotify track id.
+     *
+     * @param string $accessToken The refresh token to use.
+     * @param string $song The song name.
+     * @param string $artist The artist name.
+     *
+     * @return string the Spotify track id.
+     */
     function getSpotifyURL($accessToken, $song, $artist)
     {
-        
         $songForURL = rawurlencode($song . ' ' . $artist);
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => "https://api.spotify.com/v1/search?q=$songForURL&type=track%2Cartist",
@@ -67,10 +85,8 @@ class Spotify
             "content-type: application/json"
           ),
         ));
-
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
 
         if ($err) {

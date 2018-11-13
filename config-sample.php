@@ -5,7 +5,7 @@ $slowTimeLink = 'http://46.20.7.104/played.html';
 /** MySQL hostname */
 $DB_HOST = 'localhost';
 
-/** The name of the database for WordPress */
+/** The name of database */
 $DB_NAME = 'database_name_here';
 
 /** MySQL database username */
