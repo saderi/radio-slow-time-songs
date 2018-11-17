@@ -37,7 +37,14 @@
             <?php 
                 foreach ($lastPlay as $key => $value) { 
 
-                    $linkButton = ($value['trackId'])? '<a class="success button expanded" href="spotify:track:'.$value['trackId'].'">Add to Spotify</a>' : '<a class="alert button expanded" href="#">Search on Google</a>';
+                    if ($value['trackId']) {
+                        $linkButton = '<a class="success button expanded" 
+                                          href="spotify:track:'.$value['trackId'].'">Add to Spotify</a>';
+                    } else {
+                        $linkButton = '<a class="alert button expanded" 
+                        href="https://www.google.com.tr/search?q='.$value['song_title'].' '.$value['artist'].'">Search on Google</a>'; 
+
+                    }
 
                     ?>
                     
