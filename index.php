@@ -1,7 +1,7 @@
 <?php
 
     include 'config.php';
-    include 'DB.php';
+    include 'classes/DB.php';
 
     $query = "SELECT * FROM `play_list` ORDER BY `play_list`.`id` DESC LIMIT 10";
     $result = $DB->get_results($query);
@@ -41,9 +41,8 @@
                         $linkButton = '<a class="success button expanded" 
                                           href="spotify:track:'.$value['trackId'].'">Add to Spotify</a>';
                     } else {
-                        $linkButton = '<a class="alert button expanded" 
-                        href="https://www.google.com.tr/search?q='.$value['song_title'].' '.$value['artist'].'">Search on Google</a>'; 
-
+                        $linkButton = '<a class="alert button expanded" target="_blank" 
+                        href="https://www.google.com.tr/search?q='.$value['song_title'].' '.$value['artist'].'">Search on Google</a>';
                     }
 
                     ?>

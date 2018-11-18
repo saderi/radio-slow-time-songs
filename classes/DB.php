@@ -33,6 +33,11 @@ class DB
         $this->DB_NAME = $DB_NAME;
     }
 
+    /**
+     *
+     * @return $connection object
+     *
+     */
     function connection()
     {
         $connection = new mysqli($this->DB_HOST, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
@@ -43,6 +48,13 @@ class DB
         return $connection;
     }
 
+    /**
+     *
+     * @param string $query The query.
+     *
+     * @return $connection results of $query.
+     *
+     */
     function get_results($query)
     {
         $connection = $this->connection();

@@ -1,7 +1,7 @@
 <?php
 
 include 'config.php';
-include 'DB.php';
+include 'classes/DB.php';
 
     /**
     * function to strip out a string between two specified pieces of text.
@@ -61,7 +61,7 @@ include 'DB.php';
 
     if (strcmp($old,$nowPlaying)) {
 
-        include 'spotifyClass.php';
+        include 'classes/spotify.php';
 
         $spotify = new Spotify(
             $clientID,
