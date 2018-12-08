@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Slow Time to Spotify</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.0/css/foundation.min.css">
+    </head>
+    <body>
+        <div class="grid-container">
+            <p></p>            
+            <div class="callout">
+                <h1>10 last songs are played at <strong> Radio Slow Time </strong></h1>
+                <p>When I listen to <strong>Radio Slow Time</strong>, sometimes I want to add a specific song to my Spotify playlist. So I made this</p>
+                <a href="http://slowtime.com.tr/" class="font-bold">Radio Slow Time</a>
+            </div>
+            <div id="song_list"></div>
+        </div>
+        <footer class="grid-container text-center">
+            <p> 
+                -------
+                <a href="https://github.com/saderi/radio-slow-time-songs">Fork this on GitHub</a>
+                -------
+            </p>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.0/js/foundation.min.js"></script>
+        <script type="text/javascript">
+            function loaddata()
+            {
+                $.ajax({
+                    type: 'post',
+                    url: 'load-data.php',
+                    success: function (response) {
+                    $( '#song_list' ).html(response);
+                    }
+                });
+            }
+            $( document ).ready(function() {
+                loaddata();
+            });
+        </script>
+    </body>
+</html>
