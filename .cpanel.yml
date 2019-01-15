@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/saderi/public_html/slowtime
+    - /bin/cp * $DEPLOYPATH
