@@ -1,7 +1,7 @@
 <?php
 
-include 'config.php';
-include 'classes/DB.php';
+    include 'config.php';
+    require 'classes/DB.php';
 
     /**
     * function to strip out a string between two specified pieces of text.
@@ -13,7 +13,7 @@ include 'classes/DB.php';
     * @return string.
     *
     */
-    function get_string_between($string, $start, $end){
+    function getStringBetween($string, $start, $end){
         $string = ' ' . $string;
         $ini = strpos($string, $start);
         if ($ini == 0) return '';
@@ -30,7 +30,7 @@ include 'classes/DB.php';
     * @return string All content of the url.
     *
     */
-    function get_url_contents($url){
+    function getUrlContents($url){
         $crl = curl_init();
         $timeout = 5;
         curl_setopt ($crl, CURLOPT_URL,$url);
@@ -42,40 +42,80 @@ include 'classes/DB.php';
         return strip_tags($ret);
     }
 
+    /**
+    * inser new song to DB.
+    *
+    * @param string $play_date The play date of song.
+    * @param string $song_title The song title.
+    * @param string $artist_name The song artist.
+    * @param string $spotify_track_id Song soptify track id.
+    *
+    */
+    function insetNewSong($DB, $play_date, $song_title, $artist_name, $spotify_track_id)
+    {
 
-    $nowPlaying = get_url_contents($slowTimeLink);
-    $nowPlaying = get_string_between($nowPlaying, 'Song Title', 'Current Song');
+        $query = '
+            INSERT INTO play_list (play_date, title, artist, spotify_track_id) 
+            VALUES (
+                "'.$play_date.'",
+                "'.$song_title.'",
+                "'.$artist_name.'",
+                "'.$spotify_track_id.'"
+            )';
+        $result = $DB->get_results($query);
+    }
+
+    /**
+    * return spotify track ID.
+    *
+    * @param string $song_title The song title.
+    * @param string $artist_name The song artist.
+    *
+    * @return string spotify track ID.
+    */
+    function getSpotifyTrackId($song_title, $artist_name)
+    {
+        include 'classes/spotify.php';
+        $spotify = new Spotify(
+            SPOTIFY_CLIENT_ID,
+            SPOTIFY_CLIENT_SECRET
+        );
+        $accessToken = $spotify->getAccessToken();
+
+        if ($accessToken)
+            return $spotify->getSpotifyURL($accessToken, $song_title, $artist_name);
+
+        return false;
+    }
+
+    $nowPlaying = getUrlContents($slowTimeLink);
+    $nowPlaying = getStringBetween($nowPlaying, 'Song Title', 'Current Song');
     $nowPlaying = substr($nowPlaying, 8, -7);
     $play_date = date("Y-m-d H:i:s");
     $title_artist = explode(" - ",$nowPlaying);
-
+    $song_title = $title_artist[1];
+    $artist_name = $title_artist[0];
 
     $query = "SELECT * FROM `play_list` ORDER BY `play_list`.`id` DESC LIMIT 1";
-    $result = $DB->get_results($query);
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $old = $row["artist"].' - '.$row["title"];
-        }
-    }
+    $result = $DB->get_row($query);
+    $old = $result[2].' - '.$result[1];
 
     if (strcmp($old,$nowPlaying)) {
+        
+        $query = "SELECT spotify_track_id 
+                  FROM `play_list` 
+                  WHERE title='{$song_title}' 
+                  AND artist='{$artist_name}'
+                  ORDER BY `play_list`.`id` DESC";
+        $result = $DB->get_row($query);
 
-        include 'classes/spotify.php';
-
-        $spotify = new Spotify(
-            $clientID,
-            $clientSecret
-        );
-
-        $accessToken = $spotify->getAccessToken();
-        if ($accessToken) {
-            $spotifyTrackId = $spotify->getSpotifyURL($accessToken, $title_artist[1], $title_artist[0]);
+        if ($result[0]) {
+            $spotify_track_id = $result[0];
+        } else {
+            $spotify_track_id = getSpotifyTrackId($song_title, $artist_name);
         }
 
-        $query = 'INSERT INTO play_list (play_date, title, artist, spotify_track_id) 
-                VALUES ("'.$play_date.'", "'.$title_artist[1].'", "'.$title_artist[0].'", "'.$spotifyTrackId.'")';
-                $result = $DB->get_results($query);
+        insetNewSong($DB, $play_date, $song_title, $artist_name, $spotify_track_id);
 
     }
 
