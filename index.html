@@ -2,11 +2,11 @@
 <html class="no-js">
     <head>
         <meta charset="utf-8" />
-        <meta name="cpanel-git" content="let's test for video">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Slow Time to Spotify</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.0/css/foundation.min.css">
+        <link rel="stylesheet" href="https://d1azc1qln24ryf.cloudfront.net/114779/Socicon/style-cf.css?9ukd8d">
     </head>
     <body>
         <div class="grid-container">
@@ -45,9 +45,9 @@
                 });
             }
             $( document ).ready(function() {
-                window.setInterval(function(){
+                // window.setInterval(function(){
                     loaddata();
-                }, 3000);
+                // }, 3000);
             });
         </script>
         <style type="text/css">
@@ -75,6 +75,16 @@
             .bouncing-loader > div:nth-child(3) {
               animation-delay: 0.4s;
             }
+            i[class*="socicon"] {
+                background: #000;
+                padding: 5px;
+                color: #FFF;
+            }
+            i.socicon-spotify {background: #7bb342;}
+            i.socicon-twitter {background: #4da7de;}
+            i.socicon-facebook {background: #3e5b98;}
+            i.socicon-telegram {background: #0088cc;}
+            
         </style>
     </body>
 </html>
