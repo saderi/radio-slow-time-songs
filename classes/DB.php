@@ -1,12 +1,6 @@
 <?php
 
-$DB = new DB(
-    $DB_HOST,
-    $DB_USER,
-    $DB_PASS,
-    $DB_NAME
-);
-
+$DB = new DB();
 
 class DB 
 {
@@ -21,16 +15,16 @@ class DB
      * Constructor
      * Set up mysql list.
      *
-     * @param string $DB_HOST MySQL hostname
-     * @param string $DB_NAME The name of the database
-     * @param string $DB_USER MySQL database username
-     * @param string $DB_PASS MySQL database password
+     * @param string DB_HOST MySQL hostname
+     * @param string DB_NAME The name of the database
+     * @param string DB_USER MySQL database username
+     * @param string DB_PASS MySQL database password
      */
-    function __construct($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME) {
-        $this->DB_HOST = $DB_HOST;
-        $this->DB_USER = $DB_USER;
-        $this->DB_PASS = $DB_PASS;
-        $this->DB_NAME = $DB_NAME;
+    function __construct() {
+        $this->DB_HOST = DB_HOST;
+        $this->DB_USER = DB_USER;
+        $this->DB_PASS = DB_PASS;
+        $this->DB_NAME = DB_NAME;
     }
 
     /**
@@ -59,6 +53,20 @@ class DB
     {
         $connection = $this->connection();
         return $connection->query($query);
+    }
+
+    /**
+     *
+     * @param string $query The query.
+     *
+     * @return $connection get one row $query.
+     *
+     */
+    function get_row($query)
+    {
+        $connection = $this->connection();
+        $result = $connection->query($query);
+        return mysqli_fetch_row($result);
     }
 
 }
