@@ -3,21 +3,21 @@
 $slowTimeLink = 'http://46.20.7.104/played.html';
 
 /** MySQL hostname */
-$DB_HOST = 'localhost';
+define('DB_HOST', 'localhost');
 
 /** The name of database */
-$DB_NAME = 'database_name_here';
+define('DB_NAME', 'database_name_here');
 
 /** MySQL database username */
-$DB_USER = 'username_here';
+define('DB_USER', 'username_here');
 
 /** MySQL database password */
-$DB_PASS = 'password_here';
+define('DB_PASS', 'password_here');
 
 /** spotify app Client ID */
-$clientID = '';
+define('SPOTIFY_CLIENT_ID', '');
 
 /** spotify app Client Secret */
-$clientSecret = '';
+define('SPOTIFY_CLIENT_SECRET', '');
 
 date_default_timezone_set('Europe/Istanbul');
